@@ -34,7 +34,6 @@ void printPath(t_node **head, char* path)
 void addNode(t_node **head, t_node* toAdd){
     t_node  *tmp;
     int     check = 0;
-    int     i = 0;
 
     tmp = *head;
     while (check == 0){
@@ -55,7 +54,6 @@ void addNode(t_node **head, t_node* toAdd){
                 tmp = tmp->right;
             }
         }
-        i++;
     }
 }
 
