@@ -57,28 +57,13 @@ void addNode(t_node **head, t_node* toAdd){
     }
 }
 
-int    readTree(t_node **actual, stack *stack, int size)
+int    readTree(t_node **actual, int level, int size)
 {
     t_node *tmp = *actual;
     printf("%d\n", tmp->value);
 
-    if (tmp->left && tmp->right)
-        push(stack, tmp);
-
-    if (tmp->left)
-        readTree(&tmp->left, stack, size + 1);
-    else if (tmp->right){
-        readTree(&tmp->right, stack, size + 1);
-    }
-    else {
-        t_node *toSend = pop(stack);
-        if (toSend != NULL)
-            readTree(&toSend->right, stack, size + 1);
-        else{
-            printf("fin lecture...\n");
-            return size;
-        }
-    }
+    if (tmp->left) readTree(&tmp->left, level + 1, size + 1);
+    if (tmp->right) readTree(&tmp->right, level + 1, size + 1);
 }
 
 t_node*     findValue(t_node **root, int value){
@@ -106,10 +91,10 @@ t_node*     findValue(t_node **root, int value){
 int     checkTreeBalance(t_node **root)
 {
     t_node *tmp_root = *root;
-    stack *stack = createStack();
 
-    int     leftSize = readTree(&tmp_root->left, stack, 0);
-    int     rightSize = readTree(&tmp_root->right, stack, 0);
+    return 0;
+    int     leftSize = readTree(&tmp_root->left, 0, 0);
+    int     rightSize = readTree(&tmp_root->right, 0, 0);
 
     return (leftSize - rightSize);
 }
@@ -145,9 +130,10 @@ int main(void){
 
     t_node *tmp = findValue(&racine, 5);
 
+    readTree(&racine, 0, 0);
     // int size = readTree(&racine, stack, 0);
-    int treeBalance = checkTreeBalance(&racine);
-    printf("treeBalance = %d\n", treeBalance);
+    // int treeBalance = checkTreeBalance(&racine);
+    // printf("treeBalance = %d\n", treeBalance);
 
     return 0;
 }
